@@ -1,8 +1,7 @@
 import express from "express";
-// import mysql from 'mysql';
-import bodyParser from 'body-parser';
 import userRequest from "./Application/userRequest"
 import tripRequest from "./Application/tripRequest"
+import bodyParser from "body-parser";
 const app = express();
 const port = 8080; // default port to listen
 
@@ -17,17 +16,8 @@ app.listen( port, () => {
     console.log( `server started at http://localhost:${ port }` );
 } );
 
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use('/user', userRequest);
 app.use('/trip', tripRequest);
-
-
-/*var conn = mysql.createConnection({
-  host: "localhost:3306",
-  user: "dev",
-  password: "dev"
-});
-
-conn.connect(function(err: any) {
-  if (err) throw err;
-  console.log("Connected!");
-})*/
