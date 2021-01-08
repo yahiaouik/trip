@@ -3,9 +3,6 @@ import mysql from "mysql";
 import User from "../../Models/User";
 
 export default class TripDbService {
-  updateTrip(trip: Trip) {
-      throw new Error("Method not implemented.");
-  }
 
   conn: any;
   constructor() {
@@ -21,8 +18,8 @@ export default class TripDbService {
     })
   }
 
-  async getTrip(trip: Trip) {
-    const sql = mysql.format("SELECT * FROM Trip WHERE trip_id=?", [trip.getTripId()])
+  async getTrip(tripId: number) {
+    const sql = mysql.format("SELECT * FROM Trip WHERE trip_id=?", [tripId])
     await this.conn.query(sql, (error: any, result: any) => {
       if (error) throw error;
       // tslint:disable-next-line:no-console
@@ -31,8 +28,8 @@ export default class TripDbService {
     });
   }
 
-  async getUserTrips(user: User) {
-    const sql = mysql.format("SELECT * FROM Trip WHERE user_id=?", [user.getUserId()])
+  async getUserTrips(userId: number) {
+    const sql = mysql.format("SELECT * FROM Trip WHERE user_id=?", [userId])
     await this.conn.query(sql, (error: any, result: any) => {
       if (error) throw error;
       // tslint:disable-next-line:no-console
@@ -59,17 +56,17 @@ export default class TripDbService {
     });
   }
 
-  /*async  updateTrip(Trip: Trip) {
-    const sql =
+  async updateTrip(tripId: number) {
+    /*const sql =
     await this.conn.query(sql, (error: any, result: string) => {
       if (error) throw error;
       // tslint:disable-next-line:no-console
       console.log(result);
-    });
-  } */
+    });*/
+  }
 
-  async delateTrip(trip: Trip) {
-    const sql = mysql.format("DELETE FROM Trip WHERE trip_id= ?;",[trip.getTripId()])
+  async delateTrip(tripId: number) {
+    const sql = mysql.format("DELETE FROM Trip WHERE trip_id= ?;",[tripId])
     await this.conn.query(sql, (error: any, result: string) => {
       if (error) throw error;
       // tslint:disable-next-line:no-console

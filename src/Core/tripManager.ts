@@ -11,23 +11,23 @@ export default class TripManager {
         await tripDbService.addTrip(trip);
     }
 
-    async updateTrip(trip : Trip){
+    async updateTrip(tripId : number){
         // modifier un voyage dans la table trip
         const tripDbService = new TripDbService();
-        await tripDbService.updateTrip(trip);
+        await tripDbService.updateTrip(tripId);
     }
 
-    async deleteTrip(trip : Trip){
+    async deleteTrip(tripId : number){
         // supprime un voyage dans la table trip
         const tripDbService = new TripDbService();
-        await tripDbService.delateTrip(trip);
+        await tripDbService.delateTrip(tripId);
     }
 
-    async getTripInfo(trip : Trip){
+    async getTripInfo(tripId : number){
         // recupere info voyage dans la table trip
         // recupere les info de l'utilisateur
         const tripDbService = new TripDbService();
-        await tripDbService.getTrip(trip);
+        await tripDbService.getTrip(tripId);
     }
 
     async getTrips(){
@@ -36,10 +36,10 @@ export default class TripManager {
         await tripDbService.getTrips();
     }
 
-    async getUserTrips (user: User){
+    async getUserTrips (userId: number){
         // recupere une liste de voyage pour un utilisateur
         const tripDbService = new TripDbService();
-        await tripDbService.getUserTrips(user);
+        await tripDbService.getUserTrips(userId);
     }
 
 }

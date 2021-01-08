@@ -25,23 +25,26 @@ class UserManager {
         return __awaiter(this, void 0, void 0, function* () {
             // modifier l'utilisateur dans la table user
             const userDbService = new userDbService_1.default();
-            // await  userDbService.updateUser(user);
+            yield userDbService.updateUser(user);
         });
     }
-    deleteUser(user) {
+    deleteUser(userId) {
         return __awaiter(this, void 0, void 0, function* () {
             // supprimer l'utilisateur de la table user
             // supprimer les voyages relié a cet utilisateur
             const userDbService = new userDbService_1.default();
-            yield userDbService.delateUser(user);
+            yield userDbService.delateUser(userId);
         });
     }
-    getInfoUser(user) {
+    getInfoUser(userId) {
         return __awaiter(this, void 0, void 0, function* () {
             // recuperer info de la table utilisateur
             // recuperer liste des voyage associés
             const userDbService = new userDbService_1.default();
-            yield userDbService.getUser(user);
+            const res = yield userDbService.getUser(userId);
+            // tslint:disable-next-line:no-console
+            console.log(res);
+            return res;
         });
     }
     getUsers() {

@@ -14,21 +14,24 @@ export default class UserManager {
 
         // modifier l'utilisateur dans la table user
         const userDbService = new UserDbService();
-        // await  userDbService.updateUser(user);
+        await userDbService.updateUser(user);
     }
 
-    async deleteUser (user : User){
+    async deleteUser (userId : number){
         // supprimer l'utilisateur de la table user
         // supprimer les voyages relié a cet utilisateur
         const userDbService = new UserDbService();
-        await userDbService.delateUser(user);
+        await userDbService.delateUser(userId);
     }
 
-    async getInfoUser (user : User){
+    async getInfoUser (userId : number) : Promise<User> {
         // recuperer info de la table utilisateur
         // recuperer liste des voyage associés
         const userDbService = new UserDbService();
-        await userDbService.getUser(user);
+        const res = await userDbService.getUser(userId);
+        // tslint:disable-next-line:no-console
+        console.log(res);
+        return res;
     }
 
     async getUsers (){

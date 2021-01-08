@@ -20,6 +20,6 @@ app.listen(port, () => {
 });
 app.use(body_parser_1.default.json()); // support json encoded bodies
 app.use(body_parser_1.default.urlencoded({ extended: false }));
-app.use('/user', userRequest_1.default);
-app.use('/trip', tripRequest_1.default);
+app.use('/', userRequest_1.default);
+app.use('/', tripRequest_1.default);
 //# sourceMappingURL=index.js.map

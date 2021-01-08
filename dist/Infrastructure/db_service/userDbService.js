@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const User_1 = __importDefault(require("../../Models/User"));
 const mysql_1 = __importDefault(require("mysql"));
 class UserDbService {
     constructor() {
@@ -26,26 +27,26 @@ class UserDbService {
                 throw err;
         });
     }
-    getUser(user) {
+    getUser(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const sql = mysql_1.default.format("SELECT * FROM User WHERE user_id=?", [user.getUserId()]);
-            yield this.conn.query(sql, (error, result) => {
+            const sql = mysql_1.default.format("SELECT * FROM User WHERE user_id=?", [userId]);
+            const result = yield this.conn.query(sql, (error, res) => {
                 if (error)
                     throw error;
-                // tslint:disable-next-line:no-console
-                console.log(result[0].firstname);
-                // return new User(result["user_id"],result.firstname,result.lastname,result.promo,result.email,result.password)
+                return res;
             });
+            return new User_1.default(result[0].user_id, result[0].firstname, result[0].lastname, result[0].promo, result[0].email, result[0].password);
         });
     }
     getUsers() {
         return __awaiter(this, void 0, void 0, function* () {
             const sql = "SELECT * FROM User;";
-            yield this.conn.query(sql, (error, result) => {
+            return yield this.conn.query(sql, (error, result) => {
                 if (error)
                     throw error;
                 // tslint:disable-next-line:no-console
                 console.log(result);
+                return;
             });
         });
     }
@@ -60,17 +61,20 @@ class UserDbService {
             });
         });
     }
-    /*async  updateUser(user: User) {
-      const sql =
-      await this.conn.query(sql, (error: any, result: string) => {
-        if (error) throw error;
-        // tslint:disable-next-line:no-console
-        console.log(result);
-      });
-    } */
-    delateUser(user) {
+    updateUser(user) {
         return __awaiter(this, void 0, void 0, function* () {
-            const sql = mysql_1.default.format("DELETE FROM User WHERE user_id= ?;", [user.getUserId()]);
+            const sql = mysql_1.default.format("UPDATE User SET (firstname = ?,lastname = ?,promo = ?,email = ?,password = ?) WHERE user_id= ?;", [user.getFirstname(), user.getLastname(), user.getPromo(), user.getEmail(), user.getPassword(), user.getUserId()]);
+            yield this.conn.query(sql, (error, result) => {
+                if (error)
+                    throw error;
+                // tslint:disable-next-line:no-console
+                console.log(result);
+            });
+        });
+    }
+    delateUser(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const sql = mysql_1.default.format("DELETE FROM User WHERE user_id= ?;", [userId]);
             yield this.conn.query(sql, (error, result) => {
                 if (error)
                     throw error;

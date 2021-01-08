@@ -19,5 +19,5 @@ app.listen( port, () => {
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/user', userRequest);
-app.use('/trip', tripRequest);
+app.use('/', userRequest);
+app.use('/', tripRequest);
