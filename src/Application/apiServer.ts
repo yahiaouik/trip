@@ -11,7 +11,7 @@ export class ApiServer {
     public run() {
         // define a route handler for the default home page
         app.get('/', (req, res) => {
-            res.send('Hello world!');
+            res.send('Le serveur Trip TSE est disponible');
         });
         app.set('port', (getServerPort() || 5000));
         // start the Express server
