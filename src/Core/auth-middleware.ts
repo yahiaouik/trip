@@ -1,7 +1,7 @@
 import { JsonWebTokenError, verify } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import { readFileSync } from 'fs-extra';
-import { UnauthorizedError, ForbiddenError } from '../core/error/http-error';
+import { UnauthorizedError, ForbiddenError } from './error/http-error';
 import * as cfg from '../config';
 
 export interface DecodedJwt {

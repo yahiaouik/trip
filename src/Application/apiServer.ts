@@ -1,16 +1,17 @@
-import express from "express";
-import userRequest from "./userRequest"
-import tripRequest from "./tripRequest"
-import bodyParser from "body-parser";
+import express from 'express';
+import userRequest from './userRequest';
+import tripRequest from './tripRequest';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import bodyParser from 'body-parser';
+
 const app = express();
 const port = 8080; // default port to listen
 
 export class ApiServer {
-
     public run() {
         // define a route handler for the default home page
-        app.get("/", (req, res) => {
-            res.send("Hello world!");
+        app.get('/', (req, res) => {
+            res.send('Hello world!');
         });
 
         // start the Express server
@@ -22,18 +23,16 @@ export class ApiServer {
         app.use(bodyParser.json()); // support json encoded bodies
         app.use(bodyParser.urlencoded({ extended: false }));
 
-        app.use(function(req, res, next) {
-            res.header("Access-Control-Allow-Origin", "*");
-            res.header("Access-Control-Allow-Headers", "*");
-            res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PATCH, DELETE");
+        app.use((req, res, next) => {
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Headers', '*');
+            res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PATCH, DELETE');
             next();
-          });
+        });
 
         app.use('/', userRequest);
         app.use('/', tripRequest);
-
     }
-
 }
 
 export default new ApiServer();

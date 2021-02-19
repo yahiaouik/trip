@@ -1,5 +1,4 @@
 export default class Trip {
-
     tripId : number;
     country : string;
     countryId: string;
@@ -12,8 +11,8 @@ export default class Trip {
     userLastname: string;
     userPromo : string;
 
-    constructor(tripId : number,country : string, countryId: string, city : string,arrivalDate : Date,departureDate : Date, 
-        status: string ,userId : number, userFirstname: string = null, userLastname: string = null, userPromo: string = null){
+    constructor(tripId : number, country : string, countryId: string, city : string, arrivalDate : Date, departureDate : Date,
+        status: string, userId : number, userFirstname: string = '', userLastname: string = '', userPromo: string = '') {
         this.tripId = tripId;
         this.country = country;
         this.countryId = countryId;
@@ -27,67 +26,67 @@ export default class Trip {
         this.userPromo = userPromo;
     }
 
-    getTripId(){
+    getTripId() {
         return this.tripId;
     }
 
-    setTripId(tripId: number){
+    setTripId(tripId: number) {
         this.tripId = tripId;
     }
 
-    getCountry(){
+    getCountry() {
         return this.country;
     }
 
-    setCountry(country: string){
+    setCountry(country: string) {
         this.country = country;
     }
 
-    getCountryId(){
+    getCountryId() {
         return this.countryId;
     }
 
-    setCountryId(countryId: string){
+    setCountryId(countryId: string) {
         this.countryId = countryId;
     }
 
-    getCity(){
+    getCity() {
         return this.city;
     }
 
-    setCity(city: string){
-        this.city =city;
+    setCity(city: string) {
+        this.city = city;
     }
 
-    getArrivalDate(){
+    getArrivalDate() {
         return this.arrivalDate;
     }
 
-    setArrivalDate(arrivalDate: Date){
+    setArrivalDate(arrivalDate: Date) {
         this.arrivalDate = arrivalDate;
     }
 
-    getDepartureDate(){
+    getDepartureDate() {
         return this.departureDate;
     }
 
-    setDepartureDate(departureDate: Date){
+    setDepartureDate(departureDate: Date) {
         this.departureDate = departureDate;
     }
 
-    getStatus(){
+    getStatus() {
         return this.status;
     }
 
-    setStatus(status: string){
+    setStatus(status: string) {
         this.status = status;
     }
 
-    getUserId(){
+    getUserId() {
         return this.userId;
     }
 
-    setUserId(userId: number){
+    setUserId(userId: number) {
         this.userId = userId;
     }
 }

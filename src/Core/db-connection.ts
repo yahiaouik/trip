@@ -1,22 +1,20 @@
 import { getDbUri } from '../config';
 import 'reflect-metadata';
-import { Connection } from 'mysql';
-import mysql from "mysql";
-
+import mysql, { Connection } from 'mysql';
 
 let connection : Connection;
 
 export async function getConnection(): Promise<Connection> {
     connection = mysql.createConnection({
         host: getDbUri(),
-        user: "tripUser",
-        password: "bNfdd6JhLuowmvGWFm9b",
-        database: "trips"
-      });
+        user: 'tripUser',
+        password: 'bNfdd6JhLuowmvGWFm9b',
+        database: 'trips',
+    });
 
-      connection.connect((err: any) => {
+    connection.connect((err: any) => {
         if (err) throw err;
-      })
+    });
     return connection;
 }
 
