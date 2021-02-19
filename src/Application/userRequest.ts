@@ -1,47 +1,55 @@
 import express from "express"
 import User from "../Models/User"
 import UserManager from "../Core/userManager";
+import { isAuthorized } from "../Core/auth-middleware";
+
+// Fichier permetant de creer les routes API relatives aux utilisateurs
 
 const router = express.Router();
 const userManager = new UserManager();
 
-// Homapage - GET Routing -
-router.get('/', (req, res) => {
-    res.end('HomePage');
+// Route permettant l'authentification d'un utilisateur
+router.post('/login', async (req, res)  => {
+    await userManager.login(req.body.login, req.body.password)
+        .then(result => res.send(result))
+        .catch(e => res.status(e._status).send(e._title));
+})
 
+// Route permettant de créer un utilisateur
+router.post('/users', (req, res, next) => isAuthorized(req, res, next).catch(next),async (req, res) => {
+    const user = new User(null, req.body.firstname, req.body.lastname, req.body.promo, req.body.email, req.body.password);
+    await userManager.createUser(user)
+        .then(users => res.status(201))
+        .catch(e => res.status(e._status).send(e._title));
 });
 
-// Send Message - POST Routing -
-router.post('/users', async (req, res) => {
-    const user = new User(null,req.body.firstname,req.body.lastname,req.body.promo,req.body.email,req.body.password);
-    await userManager.createUser(user);
-    res.send("test ok")
-
-});
-// liste des Messages - GET Routing -
-router.delete('/users/:id', async (req, res) => {
-    await userManager.deleteUser(Number(req.params.id));
-    res.send("test ok")
+// Route permettant de supprimer un utilisateur
+router.delete('/users/:id',(req, res, next) => isAuthorized(req, res, next).catch(next), async (req, res) => {
+    await userManager.deleteUser(Number(req.params.id))
+        .then(result => res.send(result))
+        .catch(e => res.status(e._status).send(e._title));
 });
 
-router.patch('/users', async (req, res) => {
-    const user = new User(null,req.body.firstname,req.body.lastname,req.body.promo,req.body.email,req.body.password);
-    await userManager.updateUser(user);
-    res.send("test ok")
+// Route permettant de mettre a jour un utilisateur
+router.patch('/users', (req, res, next) => isAuthorized(req, res, next).catch(next),async (req, res) => {
+    const user = new User(null, req.body.firstname, req.body.lastname, req.body.promo, req.body.email, req.body.password);
+    await userManager.updateUser(user)
+        .then(result => res.send(result))
+        .catch(e => res.status(e._status).send(e._title));
 });
 
-router.get('/users/:id', async (req, res) => {
-  await userManager.getInfoUser(Number(req.params.id))
-  .then((response) => {
-     // tslint:disable-next-line:no-console
-    // console.log(response);
-  })
-    res.send("test ok")
+// Route permettant de recuperer un utilisateur
+router.get('/users/:id', (req, res, next) => isAuthorized(req, res, next).catch(next),async (req, res) => {
+    await userManager.getInfoUser(Number(req.params.id))
+        .then(user => res.send(user))
+        .catch(e => res.status(e._status).send(e._title));
 });
 
+// Route permettant de recuperer tous les utilisateurs
 router.get('/users', async (req, res) => {
-    await userManager.getUsers();
-    res.send("test ok")
+    await userManager.getUsers()
+        .then(users => res.send(users))
+        .catch(e => res.status(e._status).send(e._title));
 });
 
 export default router;

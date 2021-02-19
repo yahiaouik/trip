@@ -2,24 +2,29 @@ export default class Trip {
 
     tripId : number;
     country : string;
+    countryId: string;
     city : string;
     arrivalDate : Date;
     departureDate : Date;
-    longitude : number;
-    latitude : number;
+    status : string;
     userId : number;
+    userFirstname: string;
+    userLastname: string;
+    userPromo : string;
 
-
-
-    constructor(tripId : number,country : string,city : string,arrivalDate : Date,departureDate : Date,longitude: number,latitude : number,userId : number){
+    constructor(tripId : number,country : string, countryId: string, city : string,arrivalDate : Date,departureDate : Date, 
+        status: string ,userId : number, userFirstname: string = null, userLastname: string = null, userPromo: string = null){
         this.tripId = tripId;
         this.country = country;
+        this.countryId = countryId;
         this.city = city;
         this.arrivalDate = arrivalDate;
         this.departureDate = departureDate;
-        this.longitude = longitude || null;
-        this.latitude = latitude || null;
+        this.status = status;
         this.userId = userId;
+        this.userFirstname = userFirstname;
+        this.userLastname = userLastname;
+        this.userPromo = userPromo;
     }
 
     getTripId(){
@@ -36,6 +41,14 @@ export default class Trip {
 
     setCountry(country: string){
         this.country = country;
+    }
+
+    getCountryId(){
+        return this.countryId;
+    }
+
+    setCountryId(countryId: string){
+        this.countryId = countryId;
     }
 
     getCity(){
@@ -62,20 +75,12 @@ export default class Trip {
         this.departureDate = departureDate;
     }
 
-    getLongitude(){
-        return this.longitude;
+    getStatus(){
+        return this.status;
     }
 
-    setLongitude(longitude: number){
-        this.longitude = longitude;
-    }
-
-    getLatitude(){
-        return this.latitude;
-    }
-
-    setLatitude(latitude: number){
-        this.latitude = latitude;
+    setStatus(status: string){
+        this.status = status;
     }
 
     getUserId(){
