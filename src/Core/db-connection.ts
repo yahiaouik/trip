@@ -23,7 +23,7 @@ export async function getConnection(): Promise<Connection> {
 export async function close() {
     if (connection) {
         try {
-            await connection.destroy();
+            connection.destroy();
         } catch (err) { console.log(err); }
     }
 }
