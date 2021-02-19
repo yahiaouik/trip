@@ -3,9 +3,9 @@ import userRequest from './userRequest';
 import tripRequest from './tripRequest';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import bodyParser from 'body-parser';
+import { getServerPort } from '../config';
 
 const app = express();
-const port = 8080; // default port to listen
 
 export class ApiServer {
     public run() {
@@ -13,11 +13,11 @@ export class ApiServer {
         app.get('/', (req, res) => {
             res.send('Hello world!');
         });
-
+        app.set('port', (getServerPort() || 5000));
         // start the Express server
-        app.listen(port, () => {
+        app.listen(getServerPort(), () => {
             // tslint:disable-next-line:no-console
-            console.log(`server started at http://localhost:${port}`);
+            console.log(`server started at http://localhost:${getServerPort()}`);
         });
 
         app.use(bodyParser.json()); // support json encoded bodies
