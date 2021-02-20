@@ -47,19 +47,6 @@ export default class UserManager {
         );
     }
 
-    /* private async verify(password: string, hash: string): Promise<boolean> {
-        return new Promise((resolve, reject) => {
-            const [salt, key] = hash.split(':');
-            console.log(key);
-            crypto.scrypt(password, salt, 32, (err, derivedKey) => {
-                if (err) reject(err);
-                console.log(key);
-                console.log(derivedKey.toString('hex'));
-                resolve(key === derivedKey.toString('hex'));
-            });
-        });
-    } */
-
     // Permet de verifier si le mot de passe est correct
     private async verify(password: string, hash: string): Promise<boolean> {
         return new Promise((resolve, reject) => {
@@ -67,21 +54,8 @@ export default class UserManager {
         });
     }
 
-    // Permet d'encripter le nouveau mot de passe
-    private async hash(password: string): Promise<string> {
-        return new Promise((resolve, reject) => {
-            // generate random 64 bytes long salt
-            const salt = crypto.randomBytes(32).toString('hex');
-            crypto.scrypt(password, salt, 32, (err, derivedKey) => {
-                if (err) reject(err);
-                resolve(`${salt}:${derivedKey.toString('hex')}`);
-            });
-        });
-    }
-
     // Permet de creer un nouvel utilisateur
     async createUser(user: User): Promise<String> {
-        // user.setPassword(await this.hash(user.password));
         return userDbService.addUser(user);
     }
 

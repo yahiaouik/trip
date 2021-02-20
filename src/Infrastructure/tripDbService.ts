@@ -81,24 +81,20 @@ export class TripDbService {
 
     // Permet de mettre à jour un voyage
     updateTrip(trip: Trip) {
-        console.log(trip);
         const sql = mysql.format('UPDATE Trip SET country = ?, countryId= ?, city = ?, arrivaldate = ?, departuredate = ?, status= ? WHERE id=?',
             [trip.getCountry(), trip.getCountryId(), trip.getCity(), trip.getArrivalDate(), trip.getDepartureDate(),
                 trip.getStatus(), trip.getTripId()]);
         return new Promise(async (resolve, reject) => {
             (await getConnection()).query(sql, (error: any, result: string) => {
                 if (error) {
-                    console.log('ici');
                     if (error.errno === 1062) {
                         reject(new ConflictError('Ce voyage existe déjà'));
                     } else {
                         reject(error);
                     }
                 } else if (trip.userPromo !== 'ADMIN') {
-                    console.log(result);
                     resolve(this.getUserTrips(trip.getUserId()));
                 } else {
-                    console.log('ici');
                     resolve(this.getTrips());
                 }
             });

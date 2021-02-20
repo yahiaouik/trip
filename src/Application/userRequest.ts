@@ -12,7 +12,7 @@ const userManager = new UserManager();
 router.post('/login', async (req, res) => {
     await userManager.login(req.body.login, req.body.password)
         .then((result) => res.send(result))
-        .catch((e) => res.status(e._status).send(e._title));
+        .catch((e) => res.status(403).send(e._title));
 });
 
 // Route permettant de créer un utilisateur
