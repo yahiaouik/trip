@@ -52,36 +52,44 @@ export class UserDbService {
     }
 
     // Permet de creer un nouvel utilisateur
-    addUser(user: User): Promise<void> {
+    addUser(user: User): Promise<String> {
         const sql = mysql.format('INSERT INTO User (firstname,lastname,promo,email,password) VALUES(?,?,?,?,?)',
             [user.getFirstname(), user.getLastname(), user.getPromo(), user.getEmail(), user.getPassword()]);
         return new Promise(async (resolve, reject) => {
             (await getConnection()).query(sql, (error: any, result: string) => {
-                if (error.errno === 1062) {
+                if (error && error.errno === 1062) {
                     reject(new ConflictError('Email déjà utilisé'));
+                } else {
+                    resolve('l\'utilisateur a été crée');
                 }
             });
         });
     }
 
     // Permet de mettre à jour un utilisateur
-    updateUser(user: User): Promise<void> {
-        const sql = mysql.format('UPDATE User SET (firstname = ?,lastname = ?,promo = ?,email = ?,password = ?) WHERE id= ?;',
+    updateUser(user: User): Promise<String> {
+        const sql = mysql.format('UPDATE User SET firstname = ?, lastname = ?, promo = ?, email = ?, password = ? WHERE id= ?;',
             [user.getFirstname(), user.getLastname(), user.getPromo(), user.getEmail(), user.getPassword(), user.getUserId()]);
         return new Promise(async (resolve, reject) => {
             (await getConnection()).query(sql, (error: any, result: string) => {
-                if (error) throw error;
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve('l\'utilisateur a été mis à jour');
+                }
             });
         });
     }
 
     // Permet de supprimer un utilisateur
-    deleteUser(userId: number) {
+    deleteUser(userId: number): Promise<String> {
         const sql = mysql.format('DELETE FROM User WHERE id= ?;', [userId]);
         return new Promise(async (resolve, reject) => {
             (await getConnection()).query(sql, (error: any, result: string) => {
                 if (error) {
                     reject(new NotFoundError("L'utilisateur a déjà été supprimé"));
+                } else {
+                    resolve(`l'utilisateur avec l'id ${userId} a été supprimé`);
                 }
             });
         });

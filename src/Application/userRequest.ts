@@ -19,7 +19,7 @@ router.post('/login', async (req, res) => {
 router.post('/users', (req, res, next) => isAuthorized(req, res, next).catch(next), async (req, res) => {
     const user = new User(NaN, req.body.firstname, req.body.lastname, req.body.promo, req.body.email, req.body.password);
     await userManager.createUser(user)
-        .then(() => res.status(201))
+        .then((result) => res.status(201).send(result))
         .catch((e) => res.status(e._status).send(e._title));
 });
 
@@ -31,8 +31,8 @@ router.delete('/users/:id', (req, res, next) => isAuthorized(req, res, next).cat
 });
 
 // Route permettant de mettre a jour un utilisateur
-router.patch('/users', (req, res, next) => isAuthorized(req, res, next).catch(next), async (req, res) => {
-    const user = new User(NaN, req.body.firstname, req.body.lastname, req.body.promo, req.body.email, req.body.password);
+router.patch('/users/:id', (req, res, next) => isAuthorized(req, res, next).catch(next), async (req, res) => {
+    const user = new User(Number(req.params.id), req.body.firstname, req.body.lastname, req.body.promo, req.body.email, req.body.password);
     await userManager.updateUser(user)
         .then((result) => res.send(result))
         .catch((e) => res.status(e._status).send(e._title));

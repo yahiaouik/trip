@@ -8,7 +8,7 @@ import { ForbiddenError, UnauthorizedError } from './error/http-error';
 // Classe permettant de faire des operations sur les données utilisateurs
 export default class UserManager {
     // Permet de verifier si l'utilisateur existe et si le mot de passe de l'utilisateur est correct
-    async login(email: string, password: string) {
+    async login(email: string, password: string): Promise<Object> {
         const user = await userDbService.getUserByEmail(email);
         if (!user) { throw new UnauthorizedError(); }
         if (!(await this.verify(password, user.password))) throw new ForbiddenError('Utilisateur ou mot de passe incorrect');
@@ -80,20 +80,18 @@ export default class UserManager {
     }
 
     // Permet de creer un nouvel utilisateur
-    async createUser(user: User) {
-        // ajouter l'utilisateur dans la table user
+    async createUser(user: User): Promise<String> {
         // user.setPassword(await this.hash(user.password));
         return userDbService.addUser(user);
     }
 
     // Permet de mettre à jour un utilisateur
-    async updateUser(user: User) {
-        // modifier l'utilisateur dans la table user
+    async updateUser(user: User): Promise<String> {
         return userDbService.updateUser(user);
     }
 
     // Permet de supprimer un utilisateur
-    async deleteUser(userId: number) {
+    async deleteUser(userId: number): Promise<String> {
         return userDbService.deleteUser(userId);
     }
 

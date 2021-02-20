@@ -24,7 +24,7 @@ router.delete('/trips/:id', (req, res, next) => isAuthorized(req, res, next).cat
 
 // Permet de mettre à jour un voyage
 router.patch('/trips/:id', (req, res, next) => isAuthorized(req, res, next).catch(next), async (req, res) => {
-    const trip = new Trip(req.body.tripId, req.body.country, req.body.countryId, req.body.city,
+    const trip = new Trip(Number(req.params.id), req.body.country, req.body.countryId, req.body.city,
         req.body.arrivalDate, req.body.departureDate, req.body.status, req.body.userId, req.body.userFirstname,
         req.body.userLastname, req.body.userPromo);
     await tripManager.updateTrip(trip)
